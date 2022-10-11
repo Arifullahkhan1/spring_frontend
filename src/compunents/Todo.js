@@ -5,7 +5,7 @@ const Todo = (props) => {
   const { todo, setTodos, user,setTodo } = props;
   const [title, setTitle]= useState(todo.title);
   const [discription, setDiscription]= useState(todo.discription);
-  const[etodo,setEtodo]= useState(todo.etodo);
+ // const[etodo,setEtodo]= useState(todo.etodo);
 
   const handleDelet = async (id) => {
     await fetch(`${process.env.REACT_APP_BASE_URL}/api/todo/${id}`, {
@@ -23,9 +23,9 @@ const Todo = (props) => {
     let todos = await responce.json();
     setTodos(todos);
   };
-  const handleModel = (etodo) => {
+  const handleModel = (todo) => {
     ref.current.click();
-   setEtodo(etodo.title,etodo.discription)
+   //setEtodo(etodo.title,etodo.discription)
   
    };
   const ref = useRef(null);
@@ -72,7 +72,7 @@ const Todo = (props) => {
         <input
           type="checkbox"
           checked={todo.isDone}
-          onChange={() => console.log("Some action")}
+          onChange={() => console.log("Some action shold be done ")}
         />
       </p>
 
@@ -147,7 +147,7 @@ const Todo = (props) => {
           </div>
         </div>
       </div>
-      <button onClick={() => handleModel(etodo)}>Edit</button>
+      <button onClick={() => handleModel(todo)}>Edit</button>
       <button onClick={() => handleDelet(todo.id)}>Delet</button>
     </div>
   );
