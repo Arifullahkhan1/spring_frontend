@@ -1,12 +1,35 @@
 import { useRef, useState } from "react";
+// imports MatrialUI compunents
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import TextField from '@mui/material/TextField';
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+  disply:'none'
+};
+
 
 
 const Todo = (props) => {
-  const { todo, setTodos, user,setTodo } = props;
+  const { todo, setTodos, user } = props;
   const [title, setTitle]= useState(todo.title);
   const [discription, setDiscription]= useState(todo.discription);
- // const[etodo,setEtodo]= useState(todo.etodo);
-
+  //matrialUl conts *****************
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+ 
+// handle Delet starts
   const handleDelet = async (id) => {
     await fetch(`${process.env.REACT_APP_BASE_URL}/api/todo/${id}`, {
       method: "DELETE",
@@ -23,20 +46,18 @@ const Todo = (props) => {
     let todos = await responce.json();
     setTodos(todos);
   };
-  const handleModel = (todo) => {
-    ref.current.click();
-   //setEtodo(etodo.title,etodo.discription)
+
   
-   };
-  const ref = useRef(null);
+  //const ref = useRef(null);
   const refClose = useRef(null);
 
   //handle update
 
   const hadleUpdate = async (id) => {
+
     refClose.current.click();
-   // event.preventDefault();
-      console.log(id);
+   
+      
 
     await fetch(`${process.env.REACT_APP_BASE_URL}/api/todo/${id}`, {
         method: 'PUT',
@@ -63,93 +84,71 @@ const Todo = (props) => {
 }
 
   return (
-    <div>
-      <h2>{todo.title}</h2>
-      <p>{todo.discription}</p>
-      <p>
-        {" "}
+    
+    <div >
+       <h4 className="feedback-form">{todo.title}</h4>
+       
+       <div className="discription_margin">
+      <span className="discription">{todo.discription}
+      <span>
+        
         Done:{" "}
         <input
           type="checkbox"
           checked={todo.isDone}
           onChange={() => console.log("Some action shold be done ")}
         />
-      </p>
-
-      <button
-        ref={ref}
-        type="button"
-        className="btn btn-primary d-none "
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-      >
-        Launch demo modal
-      </button>
-
-      <div
-        className="modal fade"
-        id="exampleModal"
-        tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
-                Edit Todo
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              {/* form *******************************/}
-              
-                <p>Title</p>
-                <input
-                  type="text"
-                  id="etitle"
-                  name="etitle"
-                  placeholder="Title..."
-                  onChange={(e) => setTitle(e.target.value)}
-                  value={title}
-                />
-
-                <p>discription</p>
-                <textarea
-                id="ediscription"
-                name="ediscription"
-                  placeholder="Discription..."
-                  onChange={(e) => setDiscription(e.target.value)}
-                  value={discription}
-                />
-                <br />
-                <br />
-              
-            </div>
-            <div className="modal-footer">
-              <button
-              ref={refClose}
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button   onClick={()=>hadleUpdate(todo.id)}  type="button" className="btn btn-primary">
-                Update Todo
-              </button>
-            </div>
-          </div>
-        </div>
+      </span>
+      </span>
       </div>
-      <button onClick={() => handleModel(todo)}>Edit</button>
-      <button onClick={() => handleDelet(todo.id)}>Delet</button>
+      
+      {/* Mattarial Ui Mpdel*/}
+     
+      <Button   onClick={handleOpen}>Edit</Button>
+      
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Update Todo
+          </Typography>
+          <Box
+      component="form"
+      sx={{
+        '& > :not(style)': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <TextField
+        id="etitle"
+        label="Title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      <TextField
+        id="ediscription"
+        label="Discription"
+        value={discription}
+        onChange={(e) => setDiscription(e.target.value)}
+      />
+    </Box>
+        
+        <br></br>
+        <Button    onClick={()=>hadleUpdate(todo.id)} >update</Button>
+        <Button ref={refClose} onClick={handleClose}>close</Button>
+        </Box>
+      </Modal>
+     {/* <button style={{marginRight:5}} onClick={() => handleModel(todo)}>Edit</button> */}
+      <Button   color="error"
+       onClick={() => handleDelet(todo.id)}>Delet</Button >
+      
     </div>
+   
   );
 };
 

@@ -7,11 +7,8 @@
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+
+
 
 .App-header {
   background-color: #282c34;
@@ -22,6 +19,58 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+} 
+
+.main_header-form {
+  
+  width: 280px;
+ 
+  margin: 0 auto;
+  background-color: #fcfcfc;
+  padding: 20px 50px 40px;
+  box-shadow: 1px 4px 10px 1px #aaa;
+  font-family: 'Mulish', sans-serif;
+  margin-bottom: 30px;
+   
+  
+}
+.lodingHeading_Adjesmwnt{
+color: red;
+width: 480px;
+height: 80px !important;
+text-align: center;
+padding-bottom: -50px;
+}
+.discription{
+  border: #aaa groove 4px;
+  width: 380px;
+  margin: auto;
+  padding: 20px 50px 40px;
+  background-color: #abe4f4;
+  font-family: 'Shadows Into Light', cursive;
+  
+
+}
+.background{
+  height: 100vh;
+  /* background-image: url("/src/resources/login7.jpeg"); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-top: 60px;
+}
+
+ .discription_margin{
+  margin-bottom: 60px;
+  margin-top: 60px;
+
+}
+.signup{
+  margin-top: 100px;
+}
+.errMsg{
+  color: red;
+  font-weight:400;
+ 
 }
 
 .App-link {
@@ -35,4 +84,5 @@
   to {
     transform: rotate(360deg);
   }
+  
 }
